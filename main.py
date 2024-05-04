@@ -31,7 +31,7 @@ def generate_preview_clip(video_file: str, output_dir: str, clip_count=10, clip_
         clip_start: int = int(video_length / clip_count * i)
         subprocess.run(
             [
-                "ffmpeg", "-hwaccel", "qsv", "-i", video_file, "-ss", str(clip_start), "-t", str(clip_duration),
+                "ffmpeg", "-i", video_file, "-ss", str(clip_start), "-t", str(clip_duration),
                 "-vf", f"scale={output_resolution[0]}:{output_resolution[1]}", "-c:v", "h264_qsv", "-c:a", "aac",
                 output_file
             ],
@@ -43,7 +43,7 @@ def generate_preview_clip(video_file: str, output_dir: str, clip_count=10, clip_
             f.write(f"file '{i}.mp4'\n")
 
     subprocess.run(
-        ["ffmpeg", "-hwaccel", "qsv", "-f", "concat", "-safe", "0", "-i", os.path.join(output_dir, "concat.txt"),
+        ["ffmpeg", "-f", "concat", "-safe", "0", "-i", os.path.join(output_dir, "concat.txt"),
          "-c:v", "h264_qsv", "-c:a", "copy", os.path.join(output_dir, "preview.mp4")],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
     )
