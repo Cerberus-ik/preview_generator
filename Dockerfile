@@ -1,5 +1,6 @@
 FROM python:3.12-slim
 
+LABEL org.opencontainers.image.source=https://github.com/Cerberus-ik/preview_generator
 WORKDIR /app
 
 # Update system and install necessary libraries
