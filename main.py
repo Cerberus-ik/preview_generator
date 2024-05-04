@@ -34,8 +34,7 @@ def generate_preview_clip(video_file: str, output_dir: str, clip_count=10, clip_
                 "ffmpeg", "-i", video_file, "-ss", str(clip_start), "-t", str(clip_duration),
                 "-vf", f"scale={output_resolution[0]}:{output_resolution[1]}", "-c:v", "h264_qsv", "-c:a", "aac",
                 output_file
-            ],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            ]
         )
 
     with open(os.path.join(output_dir, "concat.txt"), "w") as f:
@@ -44,8 +43,7 @@ def generate_preview_clip(video_file: str, output_dir: str, clip_count=10, clip_
 
     subprocess.run(
         ["ffmpeg", "-f", "concat", "-safe", "0", "-i", os.path.join(output_dir, "concat.txt"),
-         "-c:v", "h264_qsv", "-c:a", "copy", os.path.join(output_dir, "preview.mp4")],
-        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+         "-c:v", "h264_qsv", "-c:a", "copy", os.path.join(output_dir, "preview.mp4")]
     )
     for i in range(clip_count):
         os.remove(os.path.join(output_dir, f"{i}.mp4"))
@@ -53,7 +51,6 @@ def generate_preview_clip(video_file: str, output_dir: str, clip_count=10, clip_
     os.remove(os.path.join(output_dir, "concat.txt"))
     end_time: int = int(time.time())
     print(f"Preview generated in {end_time - start_time} seconds")
-
 
 def get_video_length(video_file: str) -> int:
     cap = cv2.VideoCapture(video_file)
